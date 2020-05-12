@@ -283,7 +283,7 @@ public class TicTacToeGame {
 			else if(move==0) {
 				botChooseCorner();
 			}
-			else if(move==1 && getSumCorners(playerPiece) > 0) {
+			else if(move==1 && grid.get(4).getPiece()!=playerPiece) {
 				botPlay(grid.get(4));
 				System.out.println("Bot Chose Middle");
 				botMoveReason = "Bot Chose Middle";

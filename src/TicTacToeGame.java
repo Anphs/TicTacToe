@@ -297,6 +297,9 @@ public class TicTacToeGame {
 			else if(move==3 && getSumCorners(playerPiece) > 0) {
 				botChooseCorner();
 			}
+			else if(move==3 && getSumEdges(playerPiece) > 1 ){
+				botChooseCornerSurrounded();
+			}
 			else if(move==2) {
 				if(!botChooseOppositeFirst()) {
 					botChooseCorner();
@@ -338,6 +341,33 @@ public class TicTacToeGame {
 			System.out.println("Bot Chose Corner");
 			botMoveReason = "Bot Chose Corner";
 			return true;
+		}
+		return false;
+	}
+	
+	public boolean botChooseCornerSurrounded() {
+		char column = 0, row = 0;
+		for(Quad q: grid) {
+			if(q.getPiece()==playerPiece && q.getPosition().equals("EDGE")) {
+				String ID = q.getID();
+				if(ID.charAt(0) == '0' || ID.charAt(0) == '2') {
+					column = ID.charAt(0);
+				}
+				else if (ID.charAt(1) == '0' || ID.charAt(1) == '2') {
+					row = ID.charAt(1);
+				}
+			}
+		}
+		
+		//find the corner
+		String ID = ""+column+row;
+		for(Quad q: grid) {
+			if(q.getPiece()==0 && q.getID().equals(ID)) {
+				botPlay(q);
+				System.out.println("Bot Chose Surrounded Corner");
+				botMoveReason = "Bot Chose Surrounded Corner";
+				return true;
+			}
 		}
 		return false;
 	}
